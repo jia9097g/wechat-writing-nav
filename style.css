@@ -83,6 +83,63 @@ main {
     color: #666;
 }
 
+.card.hidden {
+    display: none;
+}
+
+.search-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#searchButton {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#searchButton:hover {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
 footer {
     text-align: center;
     padding: 2rem;
