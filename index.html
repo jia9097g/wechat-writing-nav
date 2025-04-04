@@ -139,5 +139,24 @@
     </footer>
 
     <script src="script.js"></script>
+    <!-- 内嵌JavaScript代码来监听页面语言切换按钮点击事件 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 监听语言切换按钮点击事件
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function() {
+                    // 如果switchLanguage函数存在，则调用它
+                    if (typeof switchLanguage === 'function') {
+                        switchLanguage();
+                    } else {
+                        // 否则切换按钮文本
+                        this.textContent = this.textContent === 'English' ? '中文' : 'English';
+                        console.log('语言切换函数未找到，切换按钮文本');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
