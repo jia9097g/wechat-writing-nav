@@ -144,15 +144,82 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 监听语言切换按钮点击事件
             const languageToggle = document.getElementById('languageToggle');
+            let currentLanguage = 'zh'; // 默认语言为中文
+            
+            // 定义翻译数据
+            const translations = {
+                zh: {
+                    title: '公众号写作导航 - 你的创作助手',
+                    header: {
+                        h1: '公众号写作导航',
+                        p: '你的一站式公众号创作助手',
+                        officialLink: '微信公众平台',
+                        searchPlaceholder: '搜索工具和资源...',
+                        languageToggle: 'English'
+                    },
+                    categories: {
+                        images: '配图资源',
+                        design: '海报设计工具',
+                        editor: '公众号排版工具',
+                        trending: '热榜工具'
+                    },
+                    footer: '2025 公众号写作导航 | 为创作者提供便利'
+                },
+                en: {
+                    title: 'WeChat Writing Navigator - Your Creative Assistant',
+                    header: {
+                        h1: 'WeChat Writing Navigator',
+                        p: 'Your one-stop WeChat creation assistant',
+                        officialLink: 'WeChat Official Platform',
+                        searchPlaceholder: 'Search tools and resources...',
+                        languageToggle: '中文'
+                    },
+                    categories: {
+                        images: 'Image Resources',
+                        design: 'Poster Design Tools',
+                        editor: 'WeChat Layout Tools',
+                        trending: 'Trending Tools'
+                    },
+                    footer: '2025 WeChat Writing Navigator | Providing convenience for creators'
+                }
+            };
+            
             if (languageToggle) {
                 languageToggle.addEventListener('click', function() {
                     // 如果switchLanguage函数存在，则调用它
-                    if (typeof switchLanguage === 'function') {
-                        switchLanguage();
+                    if (typeof window.switchLanguage === 'function') {
+                        window.switchLanguage();
                     } else {
                         // 否则切换按钮文本
-                        this.textContent = this.textContent === 'English' ? '中文' : 'English';
-                        console.log('语言切换函数未找到，切换按钮文本');
+                        currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+                        
+                        // 更新按钮文本
+                        this.textContent = translations[currentLanguage].header.languageToggle;
+                        
+                        // 更新页面标题
+                        document.title = translations[currentLanguage].title;
+                        
+                        // 更新头部内容
+                        document.querySelector('header h1').textContent = translations[currentLanguage].header.h1;
+                        document.querySelector('header > p').textContent = translations[currentLanguage].header.p;
+                        document.querySelector('.official-link').innerHTML = 
+                            `<i class="fas fa-shield-alt"></i> ${translations[currentLanguage].header.officialLink}`;
+                        document.getElementById('searchInput').placeholder = translations[currentLanguage].header.searchPlaceholder;
+                        
+                        // 更新分类标题
+                        document.querySelector('#images h2').innerHTML = 
+                            `<i class="fas fa-images"></i> ${translations[currentLanguage].categories.images}`;
+                        document.querySelector('#design h2').innerHTML = 
+                            `<i class="fas fa-palette"></i> ${translations[currentLanguage].categories.design}`;
+                        document.querySelector('#editor h2').innerHTML = 
+                            `<i class="fas fa-edit"></i> ${translations[currentLanguage].categories.editor}`;
+                        document.querySelector('#trending h2').innerHTML = 
+                            `<i class="fas fa-fire"></i> ${translations[currentLanguage].categories.trending}`;
+                        
+                        // 更新页脚
+                        document.querySelector('footer p').textContent = translations[currentLanguage].footer;
+                        
+                        console.log('使用内嵌语言切换函数');
                     }
                 });
             }
