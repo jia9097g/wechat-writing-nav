@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jia9097g.github.io/wechat-writing-nav/sitemap.xml
