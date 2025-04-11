@@ -333,6 +333,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const langParam = urlParams.get('lang');
     
+    // 管理robots元标签，解决重定向和重复页面问题
+    const robotsMetaTag = document.getElementById('dynamicRobots');
+    if (robotsMetaTag) {
+        // 只有主页（中文版）应该被索引，其他变体（如带有lang参数的页面）不应被索引
+        if (!langParam) {
+            robotsMetaTag.content = 'index, follow';
+        } else {
+            robotsMetaTag.content = 'noindex, follow';
+        }
+    }
+    
     // 初始化语言切换功能
     initializeLanguageToggle(langParam);
     
