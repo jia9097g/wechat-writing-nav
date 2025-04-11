@@ -53,9 +53,22 @@ function initializeSearch() {
 }
 
 // 语言切换功能
-function initializeLanguageToggle() {
+function initializeLanguageToggle(langParam) {
     const languageToggle = document.getElementById('languageToggle');
-    let currentLanguage = 'zh'; // 默认语言为中文
+    let currentLanguage = langParam === 'en' ? 'en' : 'zh'; // 根据URL参数设置初始语言
+    
+    // 如果初始语言是英文，需要先应用英文设置
+    if (currentLanguage === 'en') {
+        // 延迟应用语言设置，确保页面元素已加载
+        setTimeout(() => {
+            // 切换到英文
+            switchLanguage();
+            // 由于切换函数会切换语言，所以需要再切换回来确保是英文
+            if (currentLanguage !== 'en') {
+                switchLanguage();
+            }
+        }, 10);
+    }
     
     // 翻译数据
     const translations = {
@@ -234,6 +247,15 @@ function initializeLanguageToggle() {
         // 切换当前语言
         currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
         
+        // 更新URL参数，不刷新页面
+        const url = new URL(window.location);
+        if (currentLanguage === 'en') {
+            url.searchParams.set('lang', 'en');
+        } else {
+            url.searchParams.delete('lang');
+        }
+        window.history.pushState({}, '', url);
+        
         // 更新按钮文本
         languageToggle.textContent = translations[currentLanguage].header.languageToggle;
         
@@ -306,7 +328,13 @@ function initializeLanguageToggle() {
 // 页面加载完成后初始化搜索功能
 document.addEventListener('DOMContentLoaded', () => {
     initializeSearch();
-    initializeLanguageToggle();
+    
+    // 检查URL参数中的语言设置
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
+    
+    // 初始化语言切换功能
+    initializeLanguageToggle(langParam);
     
     // 平滑滚动功能
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
